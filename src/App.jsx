@@ -26,7 +26,7 @@ export default function App() {
   // ---------------------------------------------------------------
   const [itens, setItens] = useState([])
   const [erro, setErro] = useState('')
-  const [form, setForm] = useState({ nome: '', nota: 5 })
+  const [form, setForm] = useState({ titulo: '', descricao: '', prioridade: '', emailCriador: ''})
 
   // ---------------------------------------------------------------
   // api(): única função que fala com o back
@@ -56,7 +56,7 @@ export default function App() {
   //        (ex.: '/produtos').
   // ---------------------------------------------------------------
   async function carregar() {
-    try { setErro(''); setItens(await api('/health')) }
+    try { setErro(''); setItens(await api('/tarefas')) }
     catch (e) { setErro(e.message) }
   }
 
@@ -73,27 +73,10 @@ export default function App() {
     e.preventDefault()   // impede o formulário de recarregar a página
     try {
       setErro('')
-      await api('/itens', { method: 'POST', body: JSON.stringify({ nome: form.nome, nota: Number(form.nota) }) })
-      setForm({ nome: '', nota: 5 })   // limpa o formulário
+      await api('/tarefas', { method: 'POST', body: JSON.stringify({titulo: form.titulo, descricao: form.descricao,
+      prioridade: form.prioridade, emailCriador: form.emailCriador })})
+      setForm({titulo: '', descricao: '', prioridade: '', emailCriador: ''})   // limpa o formulário
       carregar()                       // atualiza a lista
-    } catch (e) { setErro(e.message) }
-  }
-
-  // ---------------------------------------------------------------
-  // PUT (edição no macete): pergunta os novos valores com prompt()
-  // e manda para /itens/{id}. Cancelar o prompt devolve null e sai.
-  // MUDAR: a rota (mantenha o /${item.id} no final), os textos dos
-  //        prompts e os campos do JSON. Mais tarde dá para trocar o
-  //        prompt por um formulário de edição na própria tela.
-  // ---------------------------------------------------------------
-  async function editar(item) {
-    const nome = window.prompt('Novo nome', item.nome)
-    if (nome === null) return
-    const nota = window.prompt('Nova nota', item.nota)
-    if (nota === null) return
-    try {
-      await api(`/itens/${item.id}`, { method: 'PUT', body: JSON.stringify({ nome, nota: Number(nota) }) })
-      carregar()
     } catch (e) { setErro(e.message) }
   }
 
@@ -103,7 +86,7 @@ export default function App() {
   // ---------------------------------------------------------------
   async function apagar(id) {
     if (!window.confirm('Apagar?')) return
-    try { await api(`/itens/${id}`, { method: 'DELETE' }); carregar() }
+    try { await api(`/tarefas/${id}`, { method: 'DELETE' }); carregar() }
     catch (e) { setErro(e.message) }
   }
 
