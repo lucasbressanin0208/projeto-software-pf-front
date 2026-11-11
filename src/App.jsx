@@ -146,8 +146,7 @@ export default function App() {
       <ul>
         {itens.map((i) => (
           <li key={i.id}>
-            {i.nome} | nota {i.nota}{' '}
-            <button onClick={() => editar(i)}>Editar</button>{' '}
+            {i.titulo} | {i.descricao}{' '} | {i.prioridade} | {i.emailCriador}
             <button onClick={() => apagar(i.id)}>Apagar</button>
           </li>
         ))}
