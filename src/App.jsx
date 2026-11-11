@@ -132,10 +132,14 @@ export default function App() {
       {erro && <p style={{ color: 'red' }}>{erro}</p>}
 
       <form onSubmit={cadastrar} style={{ display: 'flex', gap: 8, marginBottom: 24 }}>
-        <input placeholder="Nome" value={form.nome} required
-               onChange={(e) => setForm({ ...form, nome: e.target.value })} />
-        <input type="number" min="0" max="10" value={form.nota}
-               onChange={(e) => setForm({ ...form, nota: e.target.value })} />
+        <input placeholder="Título" value={form.titulo} required
+               onChange={(e) => setForm({ ...form, titulo: e.target.value })} />
+        <input placeholder="Descrição" value={form.descricao} required
+               onChange={(e) => setForm({ ...form, descricao: e.target.value })} />
+        <input placeholder="Prioridade" value={form.prioridade} required
+               onChange={(e) => setForm({ ...form, prioridade: e.target.value })} />
+        <input placeholder="E-mail Criador" value={form.emailCriador} required
+               onChange={(e) => setForm({ ...form, emailCriador: e.target.value })} />
         <button type="submit">Cadastrar</button>
       </form>
 
